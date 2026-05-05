@@ -1,0 +1,132 @@
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+
+body {
+    background: #f7f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.main-wrapper {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    width: 850px;
+    min-height: 550px;
+}
+
+/* --- diseño del logikn--- */
+.login-section {
+    position: absolute;
+    left: 0; width: 50%; height: 100%;
+    z-index: 2;
+    /* para animar la transición */
+    transition: all 1.2s ease-in-out;
+}
+
+/* --- diseño de los formularios --- */
+.form-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 50px;
+    text-align: center;
+}
+
+.input-item {
+    background-color: #f9fbff;
+    border: 1px solid #e0e6ed;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    border-radius: 8px;
+    outline: none;
+}
+
+.btn-blue {
+    border-radius: 8px;
+    background-color: #5599d4;
+    color: #fff;
+    padding: 12px 45px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* --- Ppanel que de desliza --- */
+.overlay-container {
+    position: absolute;
+    top: 0; left: 50%; width: 50%; height: 100%;
+    overflow: hidden;
+    /* para la velocidad */
+    transition: transform 1.2s ease-in-out;
+    z-index: 100;
+}
+
+.overlay-content {
+    background: linear-gradient(to right, #5599d4, #4a8ac1);
+    color: #ffffff;
+    position: relative;
+    left: -100%; height: 100%; width: 200%;
+    transform: translateX(0);
+    /* para la velocidad */
+    transition: transform 1.2s ease-in-out;
+}
+
+.side-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    height: 100%; width: 50%;
+    transition: all 1.2s ease-in-out;
+}
+
+.side-right { right: 0; transform: translateX(0); }
+.side-left { transform: translateX(-20%); }
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 40px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* --- para hacer lenta la transicion --- */
+#control:checked ~ .overlay-container { transform: translateX(-100%); }
+#control:checked ~ .overlay-container .overlay-content { transform: translateX(50%); }
+#control:checked ~ .login-section { transform: translateX(100%); opacity: 0; } /* Desvanecer login */
+#control:checked ~ .register-section { transform: translateX(100%); opacity: 1; z-index: 5; }
+#control:checked ~ .overlay-container .side-left { transform: translateX(0); }
+#control:checked ~ .overlay-container .side-right { transform: translateX(20%); opacity: 0; } /* Desvanecer texto derecho */
+/* --- para ordenar las filas del registro --- */
+.row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.row .input-item {
+    flex: 1; /* acomodar las cajas del ancho */
+}
+
+/* scroll por si hay muchos campos */
+.register-section {
+    overflow-y: auto;
+}
+
+.form-box {
+    padding: 30px 50px;
+}
