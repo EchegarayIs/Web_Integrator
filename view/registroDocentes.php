@@ -31,8 +31,11 @@
                 class="input-item"
                 placeholder="Nombre(s)"
                 required
+                minlength="3"
+                maxlength="40"
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="Solo letras">
+                title="Solo letras y espacios"
+                oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
 
             <div class="row">
 
@@ -44,8 +47,11 @@
                 class="input-item"
                 placeholder="Apellido Paterno"
                 required
+                minlength="3"
+                maxlength="30"
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="Solo letras">
+                title="Solo letras y espacios"
+                oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
 
                 <!-- APELLIDO MATERNO -->
                 <input
@@ -55,8 +61,11 @@
                 class="input-item"
                 placeholder="Apellido Materno"
                 required
+                minlength="3"
+                maxlength="30"
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="Solo letras">
+                title="Solo letras y espacios"
+                oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
 
             </div>
 
@@ -105,22 +114,28 @@
                 class="input-item"
                 placeholder="Especialidad"
                 required
+                minlength="3"
+                maxlength="50"
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="Solo letras">
+                title="Solo letras y espacios"
+                oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
 
             </div>
 
     
             <!-- Grado de estudio -->
             <input
-                id="gradoEstudio"
-                name="gradoEstudio"
-                type="text"
-                class="input-item"
-                placeholder="Grado de Estudio"
-                required
-                pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                title="Solo letras">
+            id="gradoEstudio"
+            name="gradoEstudio"
+            type="text"
+            class="input-item"
+            placeholder="Grado de Estudio"
+            required
+            minlength="3"
+            maxlength="50"
+            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+            title="Solo letras y espacios"
+            oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
 
             <div class="row">
 
