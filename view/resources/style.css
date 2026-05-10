@@ -211,3 +211,259 @@ body {
       font-size: 32px;
       margin-bottom: 20px;
     }
+
+  /* --- TABLAAAAAAAAAAAAAAAAAS PASE DE LISTA --- */
+  /* --- BASE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+
+body {
+    background: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor Principal */
+.attendance-card {
+    background: white;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    padding: 25px;
+}
+
+/* Cabecera: Flecha y Selector de Fecha */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-arrow {
+    font-size: 24px;
+    color: #5599d4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.date-input {
+    border: 1px solid #dce4ec;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: #444;
+}
+
+/* --- TABLA CON SCROLL --- */
+.table-scroll-area {
+    max-height: 350px; /* Altura del contenido antes del scroll */
+    overflow-y: auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Encabezado Fijo (Sticky) */
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: #5599d4; /* Azul Dash */
+    color: white;
+    padding: 15px;
+    font-size: 14px;
+    z-index: 10;
+}
+
+/* Cuerpo de la tabla */
+tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #333;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background-color: #f9fbff;
+}
+
+/* Celdas de Radio */
+.center-cell {
+    text-align: center;
+}
+
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #5599d4; /* Color del círculo al seleccionar */
+    cursor: pointer;
+}
+
+/* Botón Enviar */
+.footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-submit {
+    background-color: #5599d4;
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #4682b4;
+}
+
+/* --- GRUPOOOOOOOOOOOOOOS --- */
+/* --- CONFIGURACIÓN BASE --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #ffffff; /* Fondo blanco puro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+/* --- ENCABEZADO (Flecha y Título) --- */
+.header-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 40px;
+}
+
+.back-link {
+    font-size: 32px;
+    color: #5599d4;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.main-title {
+    font-size: 26px;
+    color: #333;
+    font-weight: 700;
+}
+
+/* --- CONTENEDOR DE GRUPOS (3 por fila) --- */
+.groups-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 35px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* --- TARJETA DE GRUPO --- */
+.group-card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    border-radius: 25px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #f2f2f2;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.group-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+
+/* Banner superior con transparencia */
+.card-banner {
+    width: 100%;
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Contenedor del icono/imagen */
+.center-icon-box {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6); /* Más transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.center-icon-box img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Nombre de la materia (Color oscuro para leer sobre pastel) */
+.subject-name {
+    color: #444; 
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* Sección inferior blanca */
+.card-info {
+    padding: 22px 15px;
+    background-color: white;
+    text-align: center;
+}
+
+.group-label {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+/* --- PALETA DE COLORES CON TRANSPARENCIA (0.2 a 0.3 de opacidad) --- */
+
+/* Azul GESA */
+.bg-blue { background-color: rgba(85, 153, 212, 0.25); }
+.txt-blue { color: #5599d4; }
+
+/* Morado */
+.bg-purple { background-color: rgba(142, 140, 216, 0.25); }
+.txt-purple { color: #8e8cd8; }
+
+/* Verde */
+.bg-green { background-color: rgba(118, 200, 147, 0.25); }
+.txt-green { color: #76c893; }
+
+/* Naranja/Amarillo */
+.bg-orange { background-color: rgba(244, 162, 97, 0.25); }
+.txt-orange { color: #f4a261; }
+
+/* Rojo/Rosa */
+.bg-red { background-color: rgba(231, 111, 81, 0.25); }
+.txt-red { color: #e76f51; }
