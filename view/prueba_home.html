@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - Resumen de Perfil</title>
+  <style>
+    :root{
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: rgba(15, 23, 42, .10);
+      --shadow: 0 10px 30px rgba(2, 6, 23, .06);
+
+      --primary: #2563eb; /* blue */
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+
+      --radius: 16px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+      background: rgba(246, 248, 252, .78);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .logo{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #60a5fa);
+      box-shadow: 0 10px 20px rgba(37, 99, 235, .25);
+    }
+
+    .spacer{ flex: 1; }
+
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.7);
+    }
+    .pill select{
+      border: none;
+      background: transparent;
+      outline: none;
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn{
+      appearance: none;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(2, 6, 23, .04);
+    }
+    .btn.primary{
+      border-color: rgba(37, 99, 235, .35);
+      background: rgba(37, 99, 235, .10);
+      color: #1d4ed8;
+    }
+
+    /* Layout */
+    .container{
+      max-width: 1200px;
+      margin: 18px auto;
+      padding: 0 18px 26px;
+    }
+    .grid{
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      position: sticky;
+      top: 76px;
+      background: rgba(255,255,255,.7);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .nav{
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .nav a{
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: .15s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav a:hover{
+      background: rgba(37, 99, 235, .08);
+      border-color: rgba(37, 99, 235, .20);
+    }
+    .nav a.active{
+      background: rgba(37, 99, 235, .12);
+      border-color: rgba(37, 99, 235, .30);
+      color: #1d4ed8;
+    }
+    .icon{
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    /* Main content */
+    .main{
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-title{
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 0 0 10px;
+    }
+    .section-title h2{
+      margin: 0;
+      font-size: 18px;
+    }
+    .section-title span{
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* Cards */
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    /* Profile card */
+    .profile{
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+    .avatar{
+      width: 110px;
+      height: 110px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, .22), rgba(96, 165, 250, .35));
+      border: 1px solid rgba(37, 99, 235, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: 900;
+      color: #1d4ed8;
+      margin: 0 auto;
+    }
+    .profile-meta{
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px 14px;
+      align-items: start;
+    }
+    .name{
+      font-size: 20px;
+      font-weight: 900;
+      margin: 0;
+    }
+    .role{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .kv{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .kv .item{
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(246, 248, 252, .6);
+    }
+    .kv .label{
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .kv .value{
+      margin-top: 6px;
+      font-weight: 900;
+    }
+
+    .status-badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-weight: 900;
+      width: fit-content;
+      justify-self: end;
+    }
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, .15);
+    }
+    .status-badge.warning .dot{ background: var(--warning); box-shadow: 0 0 0 4px rgba(245, 158, 11, .18); }
+    .status-badge.danger .dot{ background: var(--danger); box-shadow: 0 0 0 4px rgba(220, 38, 38, .18); }
+
+    /* KPI grid */
+    .kpis{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .kpi{
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(37, 99, 235, .06), rgba(255,255,255,1) 60%);
+    }
+    .kpi .top{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .kpi .label{
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .kpi .trend{
+      font-weight: 900;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.85);
+      color: var(--primary);
+    }
+    .kpi .value{
+      margin-top: 10px;
+      font-weight: 1000;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+    }
+    .kpi .sub{
+      margin-top: 6px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    /* Two-column row */
+    .two-col{
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 16px;
+    }
+
+    /* Activity */
+    .list{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .row-item{
+      border: 1px solid var(--border);
+      background: rgba(246, 248, 252, .55);
+      border-radius: 14px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 38px 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+    .row-item .mini-icon{
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 1000;
+      color: var(--primary);
+    }
+    .row-item .title{
+      font-weight: 1000;
+      margin: 0;
+      font-size: 14px;
+    }
+    .row-item .meta{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .tag{
+      font-weight: 1000;
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--muted);
+      width: fit-content;
+    }
+    .tag.ok{ color: #14532d; background: rgba(22, 163, 74, .10); border-color: rgba(22, 163, 74, .25); }
+    .tag.warn{ color: #7c2d12; background: rgba(245, 158, 11, .12); border-color: rgba(245, 158, 11, .28); }
+    .tag.err{ color: #7f1d1d; background: rgba(220, 38, 38, .10); border-color: rgba(220, 38, 38, .25); }
+
+    /* Alerts */
+    .alerts{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .alert-card{
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(246, 248, 252, .55);
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .alert-icon{
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 1000;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .alert-icon.success{ color: var(--success); }
+    .alert-icon.warning{ color: var(--warning); }
+    .alert-icon.danger{ color: var(--danger); }
+
+    .alert-title{
+      font-weight: 1000;
+      margin: 0;
+      font-size: 14px;
+    }
+    .alert-desc{
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    /* Tables (simple grid) */
+    .mini-table{
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(246, 248, 252, .55);
+    }
+    .mini-table th, .mini-table td{
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(15, 23, 42, .08);
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .mini-table th{
+      background: rgba(255,255,255,.7);
+      color: var(--muted);
+      font-weight: 1000;
+      font-size: 12px;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+    }
+    .mini-table td{
+      font-weight: 900;
+      color: var(--text);
+    }
+    .mini-table tr:last-child td{ border-bottom: none; }
+
+    /* Actions */
+    .actions{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .grid{
+        grid-template-columns: 1fr;
+      }
+      .sidebar{
+        position: relative;
+        top: auto;
+      }
+      .two-col{
+        grid-template-columns: 1fr;
+      }
+      .kpis{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .profile{
+        grid-template-columns: 120px 1fr;
+      }
+    }
+
+    @media (max-width: 520px){
+      .topbar-inner{
+        flex-wrap: wrap;
+      }
+      .kpis{
+        grid-template-columns: 1fr;
+      }
+      .profile{
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .profile-meta{
+        grid-template-columns: 1fr;
+      }
+      .kv{
+        grid-template-columns: 1fr 1fr;
+        justify-items: stretch;
+      }
+      .status-badge{
+        justify-self: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>Panel</div>
+      </div>
+
+      <div class="pill" aria-label="Selector de perfil">
+        <span style="font-weight:900;color:var(--muted);font-size:12px;">Perfil</span>
+        <select>
+          <option>Ana Pérez</option>
+          <option>Carlos Gómez</option>
+          <option>María López</option>
+        </select>
+      </div>
+
+      <div class="spacer"></div>
+
+      <button class="btn" type="button">Notificaciones</button>
+      <button class="btn primary" type="button">Cuenta</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="nav">
+          <a class="active" href="#">
+            <span class="icon">H</span> Home
+          </a>
+          <a href="#">
+            <span class="icon">R</span> Resumen
+          </a>
+          <a href="#">
+            <span class="icon">A</span> Actividad
+          </a>
+          <a href="#">
+            <span class="icon">S</span> Ajustes
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main -->
+      <section class="main">
+        <!-- Profile summary -->
+        <div class="card">
+          <div class="profile">
+            <div class="avatar" aria-label="Avatar">AP</div>
+
+            <div class="profile-meta">
+              <div>
+                <h1 class="name">Ana Pérez</h1>
+                <p class="role">Administradora · Perfil Activo</p>
+
+                <div class="kv" role="group" aria-label="Datos generales">
+                  <div class="item">
+                    <div class="label">ID</div>
+                    <div class="value">AP-1042</div>
+                  </div>
+                  <div class="item">
+                    <div class="label">Últ. sync</div>
+                    <div class="value">08:12</div>
+                  </div>
+                  <div class="item">
+                    <div class="label">Departamento</div>
+                    <div class="value">Operaciones</div>
+                  </div>
+                  <div class="item">
+                    <div class="label">Nivel</div>
+                    <div class="value">82</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="status-badge">
+                <span class="dot" aria-hidden="true"></span>
+                Activa
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="card">
+          <div class="section-title">
+            <h2>Resumen general</h2>
+            <span>KPIs del perfil</span>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi">
+              <div class="top">
+                <div class="label">Total de registros</div>
+                <div class="trend">↑ +6%</div>
+              </div>
+              <div class="value">1,284</div>
+              <div class="sub">vs. semana anterior</div>
+            </div>
+
+            <div class="kpi">
+              <div class="top">
+                <div class="label">Ingresos / saldo</div>
+                <div class="trend">↑ +2.4%</div>
+              </div>
+              <div class="value">$12,450</div>
+              <div class="sub">últimos 30 días</div>
+            </div>
+
+            <div class="kpi">
+              <div class="top">
+                <div class="label">Tasa de éxito</div>
+                <div class="trend">↑ +1.1%</div>
+              </div>
+              <div class="value">93%</div>
+              <div class="sub">operaciones completadas</div>
+            </div>
+
+            <div class="kpi">
+              <div class="top">
+                <div class="label">Pendientes</div>
+                <div class="trend" style="color:#b45309;">↓ -3</div>
+              </div>
+              <div class="value">7</div>
+              <div class="sub">para revisión</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity + Alerts -->
+        <div class="two-col">
+          <div class="card">
+            <div class="section-title">
+              <h2>Actividad reciente</h2>
+              <span>últimos movimientos</span>
+            </div>
+
+            <div class="list">
+              <div class="row-item">
+                <div class="mini-icon">✓</div>
+                <div>
+                  <p class="title">Documento aprobado</p>
+                  <p class="meta">08 mayo · 10:35</p>
+                </div>
+                <div class="tag ok">Completado</div>
+              </div>
+
+              <div class="row-item">
+                <div class="mini-icon">⟲</div>
+                <div>
+                  <p class="title">Actualización de datos</p>
+                  <p class="meta">07 mayo · 18:10</p>
+                </div>
+                <div class="tag ok">Actualizado</div>
+              </div>
+
+              <div class="row-item">
+                <div class="mini-icon" style="color:var(--warning);">!</div>
+                <div>
+                  <p class="title">Validación pendiente</p>
+                  <p class="meta">06 mayo · 09:02</p>
+                </div>
+                <div class="tag warn">Pendiente</div>
+              </div>
+
+              <div class="row-item">
+                <div class="mini-icon" style="color:var(--danger);">×</div>
+                <div>
+                  <p class="title">Error en sincronización</p>
+                  <p class="meta">05 mayo · 21:44</p>
+                </div>
+                <div class="tag err">Revisar</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">
+              <h2>Alertas</h2>
+              <span>estado del perfil</span>
+            </div>
+
+            <div class="alerts">
+              <div class="alert-card">
+                <div class="alert-icon success">✓</div>
+                <div>
+                  <p class="alert-title">Perfil al día</p>
+                  <p class="alert-desc">No hay inconsistencias detectadas en los últimos 7 días.</p>
+                </div>
+              </div>
+
+              <div class="alert-card">
+                <div class="alert-icon warning">!</div>
+                <div>
+                  <p class="alert-title">Documentación por vencer</p>
+                  <p class="alert-desc">Faltan 12 días para renovar la verificación de identidad.</p>
+                </div>
+              </div>
+
+              <div class="alert-card">
+                <div class="alert-icon danger">×</div>
+                <div>
+                  <p class="alert-title">Pendiente crítico</p>
+                  <p class="alert-desc">Hay 2 elementos que requieren confirmación manual.</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+              <button class="btn" type="button">Ver todas</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details table + Actions -->
+        <div class="two-col">
+          <div class="card">
+            <div class="section-title">
+              <h2>Últimos elementos</h2>
+              <span>detalle rápido</span>
+            </div>
+
+            <table class="mini-table" aria-label="Tabla de detalle rápido">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Solicitud #A-221</td>
+                  <td>08/05</td>
+                  <td><span class="tag ok">Aprobado</span></td>
+                </tr>
+                <tr>
+                  <td>Reporte de avance</td>
+                  <td>07/05</td>
+                  <td><span class="tag ok">OK</span></td>
+                </tr>
+                <tr>
+                  <td>Actualización de datos</td>
+                  <td>06/05</td>
+                  <td><span class="tag warn">Revisión</span></td>
+                </tr>
+                <tr>
+                  <td>Integración fallida</td>
+                  <td>05/05</td>
+                  <td><span class="tag err">Error</span></td>
+                </tr>
+                <tr>
+                  <td>Documento adjunto</td>
+                  <td>04/05</td>
+                  <td><span class="tag ok">Completado</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <div class="section-title">
+              <h2>Acciones principales</h2>
+              <span>atajos</span>
+            </div>
+
+            <div class="actions">
+              <button class="btn primary" type="button" style="flex:1; min-width: 180px;">Actualizar perfil</button>
+              <button class="btn" type="button" style="flex:1; min-width: 180px;">Ver historial</button>
+              <button class="btn" type="button" style="flex:1; min-width: 180px;">Configurar notificaciones</button>
+              <button class="btn" type="button" style="flex:1; min-width: 180px;">Crear nuevo registro</button>
+            </div>
+
+            <div style="margin-top:14px; color:var(--muted); font-weight:900; font-size:12px; line-height:1.4;">
+              Sugerencia: conecta estos botones con tus rutas/funciones reales para cargar datos del perfil.
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+</body>
+</html>
