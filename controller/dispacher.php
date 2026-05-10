@@ -26,18 +26,29 @@ try {
             }
             break;
         case 'LoginDocente':
+
             require_once("../model/MDocentes.php");
+
             $noEmpleado = $_POST['noEmpleado'];
             $contrasenia = $_POST['password'];
+
             $docente = new MDocentes();
+
             $resultado = $docente->verificar($noEmpleado, $contrasenia);
+
             if ($resultado) {
+
                 $_SESSION['usuario'] = $resultado;
+
                 header('Location: ../view/homeDocente.php');
+
             } else {
+
                 $_SESSION['errormsj'] = "Número de empleado o contraseña incorrecta.";
+
                 header('Location: ../view/loginDocente.php');
-            }   
+            }
+
             break;
         case 'LoginAdmin':
             require_once("../model/MAdmin.php");

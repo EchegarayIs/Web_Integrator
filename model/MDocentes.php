@@ -49,6 +49,102 @@ class MDocentes{
             $cnx->cerrarConexion();
         }
     }   
+     // NUEVO MÉTODO
+    public function obtenerDocentePorId($idDocente){
+
+        $cnx = new Conexion();
+
+        try {
+
+            $conexion = $cnx->conectar();
+
+            $stmt = $conexion->prepare("
+                SELECT * 
+                FROM docentes
+                WHERE id_docente = :idDocente
+            ");
+
+            $stmt->bindParam(':idDocente', $idDocente);
+
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+        } finally {
+
+            $cnx->cerrarConexion();
+        }
+    }
+    public function actualizarPassword($idDocente, $nuevaPassword){
+
+    $cnx = new Conexion();
+
+    try{
+
+        $conexion = $cnx->conectar();
+
+        $stmt = $conexion->prepare("
+            UPDATE docentes
+            SET contrasenia = :password
+            WHERE id_docente = :idDocente
+        ");
+
+        $stmt->bindParam(':password', $nuevaPassword);
+        $stmt->bindParam(':idDocente', $idDocente);
+
+        return $stmt->execute();
+
+    }catch(PDOException $e){
+
+        throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+    }finally{
+
+        $cnx->cerrarConexion();
+    }
+}
+public function obtenerGruposDocente($idDocente){
+
+    $cnx = new Conexion();
+
+    try{
+
+        $conexion = $cnx->conectar();
+
+        $stmt = $conexion->prepare("
+            SELECT 
+                dg.id_docente_grupo,
+                g.id_grupo,
+                g.nombre_grupo,
+                m.nombre_materia
+            FROM docente_grupo dg
+            INNER JOIN grupos g 
+                ON dg.id_grupo = g.id_grupo
+            INNER JOIN materias m
+                ON g.id_materia = m.id_materia
+            WHERE dg.id_docente = :idDocente
+        ");
+
+        $stmt->bindParam(':idDocente', $idDocente);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }catch(PDOException $e){
+
+        throw new Exception("Error en el sistema: " . $e->getMessage());
+
+    }finally{
+
+        $cnx->cerrarConexion();
+    }
+}
+
 
 }
 ?>

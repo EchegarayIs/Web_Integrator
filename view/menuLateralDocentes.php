@@ -12,7 +12,7 @@
             <span>Inicio</span>
         </a>
         
-        <a href="grupos.php" class="menu-item">
+        <a href="misGruposDocente.php" class="menu-item">
             <span class="material-icons">groups</span>
             <span>Mis Grupos</span>
         </a>

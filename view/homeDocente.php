@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['usuario'])){
+    header("Location: loginDocente.php");
+    exit();
+}
+
+$docente = $_SESSION['usuario'];
+
+$nombreCompleto = $docente['nombre'] . " " . $docente['app'] . " " . $docente['apm'];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,44 +32,44 @@
 
                         <div class="profile-meta">
                             <div>
-                                <h1 id="nombredocente" class="name">Eduardo Pérez García</h1>
+                                <h1 id="nombredocente" class="name"><?php echo $nombreCompleto; ?></h1>
                                 <p class="role">Profesor · <?php echo "Ingeniería en Sistemas"; ?></p>
 
                                 <div class="kv" role="group" aria-label="Datos de Identificación">
                                     <div class="item">
                                         <div class="label">No. Empleado</div>
-                                        <div id="noempleado" class="value">EMP-2026-05</div>
+                                        <div id="noempleado" class="value"><?php echo $docente['no_empleado']; ?></div>
                                     </div>
                                     <div class="item">
                                         <div class="label">CURP</div>
-                                        <div id="curpdocente" class="value">PEGE850101HDFRRG01</div>
+                                        <div id="curpdocente" class="value"><?php echo $docente['curp']; ?></div>
                                     </div>
                                     <div class="item">
                                         <div class="label">RFC</div>
-                                        <div id="rfcdocente" class="value">PEGE850101-ABC</div>
+                                        <div id="rfcdocente" class="value"><?php echo $docente['rfc']; ?></div>
                                     </div>
                                     <div class="item">
                                         <div class="label">NSS</div>
-                                        <div id="nssdocente" class="value">1234-56-7890-1</div>
+                                        <div id="nssdocente" class="value"><?php echo $docente['nss']; ?></div>
                                     </div>
                                 </div>
 
                                 <div class="kv" style="margin-top: 15px;">
                                     <div class="item">
                                         <div class="label">Cédula Prof.</div>
-                                        <div id="ceduladocente" class="value">12345678</div>
+                                        <div id="ceduladocente" class="value"><?php echo $docente['cedula']; ?></div>
                                     </div>
                                     <div class="item">
                                         <div class="label">Especialidad</div>
-                                        <div id="especialidaddocente" class="value">Ciberseguridad</div>
+                                        <div id="especialidaddocente" class="value"><?php echo $docente['especialidad']; ?></div>
                                     </div>
                                     <div class="item">
                                         <div class="label">Grado de Estudio</div>
-                                        <div id="gradoestudiodocente" class="value">Maestría en TI</div>
+                                        <div id="gradoestudiodocente" class="value"><?php echo $docente['grado_estudio']; ?></div>
                                     </div>
                                     <div class="item">
                                         <div class="label">Registro</div>
-                                        <div id="registrodocente" class="value">15/02/2026</div>
+                                        <div id="registrodocente" class="value">2026-01-01</div>
                                     </div>
                                 </div>
                             </div>
@@ -81,21 +93,21 @@
                                 <div class="mini-icon">email</div>
                                 <div>
                                     <p class="title">Correo Institucional</p>
-                                    <p id="correodocente" class="meta">eduardo.perez@itsoeh.edu.mx</p>
+                                    <p id="correodocente" class="meta"><?php echo $docente['correo']; ?></p>
                                 </div>
                             </div>
                             <div class="row-item">
                                 <div class="mini-icon">phone</div>
                                 <div>
                                     <p class="title">Teléfono / Celular</p>
-                                    <p  id="telefonodocente" class="meta">771-123-4567</p>
+                                    <p  id="telefonodocente" class="meta"><?php echo $docente['telefono']; ?></p>
                                 </div>
                             </div>
                             <div class="row-item">
                                 <div class="mini-icon">cake</div>
                                 <div>
                                     <p class="title">Fecha de Nacimiento</p>
-                                    <p id="fechanacdocente" class="meta">01 de Enero de 1985</p>
+                                    <p id="fechanacdocente" class="meta"><?php echo $docente['fecha_nac']; ?></p>
                                 </div>
                             </div>
                         </div>

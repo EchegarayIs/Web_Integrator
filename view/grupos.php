@@ -8,7 +8,7 @@
 <body>
 
     <div class="header-container">
-        <a href="dashboard.html" class="back-link">&#8592;</a>
+        <a href="homeDocente.php" class="back-link">&#8592;</a>
         <h1 class="main-title">Mis Grupos</h1>
     </div>
 
