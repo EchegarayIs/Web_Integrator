@@ -213,8 +213,15 @@ body {
     }
 
   /* --- TABLAAAAAAAAAAAAAAAAAS PASE DE LISTA --- */
-  /* --- BASE --- */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+/* --- TABLAAAAAAAAAAAAAAAAAS PASE DE LISTA --- */
+
+/* --- BASE --- */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', sans-serif; 
+}
 
 body {
     background: #f4f7f6;
@@ -324,6 +331,39 @@ input[type="radio"] {
 
 .btn-submit:hover {
     background-color: #4682b4;
+}
+
+/* Asegura que el contenido respete el espacio del menú lateral */
+.container {
+    margin-left: 260px; /* Ajusta según el ancho de tu sidebar */
+    padding: 30px;
+    width: calc(100% - 260px);
+}
+
+/* Mejora visual de la tabla para que combine con el Dashboard */
+.attendance-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.table-scroll-area {
+    max-height: 500px; /* Altura máxima antes de activar el scroll interno */
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+/* Estilo para los radios (botones redondos) */
+input[type="radio"] {
+    accent-color: #5599d4; /* Color azul pastel de tu paleta */
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.center-cell {
+    text-align: center;
+    vertical-align: middle;
 }
 
 /* --- GRUPOOOOOOOOOOOOOOS --- */
