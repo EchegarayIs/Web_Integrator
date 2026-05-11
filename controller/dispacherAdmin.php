@@ -7,6 +7,20 @@ try {
     $accion = $_POST['accion'];
     
     switch ($accion) {
+        case 'LoginAdmin':
+            require_once("../model/MAdmin.php");
+            $noEmpleado = $_POST['noEmpleado'];
+            $contrasenia = $_POST['password'];
+            $admin = new MAdmin();
+            $resultado = $admin->verificar($noEmpleado, $contrasenia);
+            if ($resultado) {
+                $_SESSION['admin'] = $resultado;
+                header('Location: ../view/homeAdmin.php');
+            } else {
+                $_SESSION['errormsj'] = "Número de empleado o contraseña incorrecta.";
+                header('Location: ../view/loginAdmin.php');
+            }   
+            break;
 
         case 'RegistrarAdmin':
             require_once("../model/MAdmin.php");
@@ -34,7 +48,7 @@ try {
                 $_SESSION['errormsj'] = "Error al registrar el administrador.";
                 header('Location: ../view/registroAdmin.php');
             }
-            break;
+        break;        
     }
 
 } catch (Exception $ex) {

@@ -48,5 +48,23 @@ class MAdmin{
         }
     }
 
+    public function consultarDatos($id) {
+        $cnx = new Conexion();
+
+        try {
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("SELECT * FROM administradores WHERE id_admin = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+            
+        } catch (PDOException $e) {
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+        } finally {
+            $cnx->cerrarConexion();
+        }
+    }
+
 }
 ?>
