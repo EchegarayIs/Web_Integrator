@@ -339,11 +339,15 @@ body {
     /* KPI grid */
     .kpis{
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
     .kpi{
-      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+      min-height: 140px;
       border-radius: var(--radius);
       border: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(37, 99, 235, .06), rgba(255,255,255,1) 60%);

@@ -1,55 +1,62 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['admin'])){
+    header("Location: loginAdmin.php");
+    exit();
+}
+
+$admin = $_SESSION['admin'];
+$nombreCompleto = $admin['nombre'] . " " . $admin['app'] . " " . $admin['apm'];
+$rol = $admin['puesto'];
+$departamento = $admin['departamento'];
+$noEmpleado = $admin['no_empleado'];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Administrativo Escolar</title>
-
     <link rel="stylesheet" href="resources/homeAdmin.css">
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-
 <body>
 
     <?php include 'menuLateralAdmin.php'; ?>
 
     <main class="container">
-
         <div class="grid">
-
             <section class="main">
-
-                <!-- ENCABEZADO ORIGINAL -->
                 <div class="card">
-
                     <div class="profile">
-
                         <div class="avatar" aria-label="Avatar">
-                            AP
+                            <?php
+                            $iniciales = strtoupper(substr($admin['nombre'], 0, 1) . substr($admin['app'], 0, 1));
+                            echo $iniciales;
+                            ?>
                         </div>
 
                         <div class="profile-meta">
-
                             <div>
-
                                 <h1 class="name">
-                                    Ana Pérez
+                                    <?php echo $nombreCompleto; ?>
                                 </h1>
 
                                 <p class="role">
-                                    Administradora · Sistema Escolar
+                                  <?php echo $rol ?>
+                                   · <?php echo $departamento ?>
                                 </p>
 
                                 <div class="kv">
 
                                     <div class="item">
                                         <div class="label">
-                                            Departamento
+                                            ID
                                         </div>
 
                                         <div class="value">
-                                            Control Escolar
+                                            <?php echo $noEmpleado; ?>
                                         </div>
                                     </div>
 
@@ -59,51 +66,41 @@
                                         </div>
 
                                         <div class="value">
-                                            Hoy · 10:25 AM
+                                          Hoy · <?php 
+                                              date_default_timezone_set('America/Mexico_City');
+                                              $hora = new DateTime();
+                                              echo $hora->format('H:i A');
+                                              ?>
                                         </div>
                                     </div>
 
                                     <div class="item">
                                         <div class="label">
-                                            Estado
+                                            Departamento
                                         </div>
 
                                         <div class="value">
-                                            Activo
+                                            <?php echo $departamento; ?>
                                         </div>
                                     </div>
 
                                     <div class="item">
                                         <div class="label">
-                                            Rol
+                                            Puesto
                                         </div>
 
                                         <div class="value">
-                                            Administrador
+                                            <?php echo $rol; ?>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
-
-                            <div class="status-badge">
-
-                                <span class="dot"></span>
-
-                                En línea
-
-                            </div>
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- DASHBOARD -->
                 <div class="card">
-
                     <div class="section-title">
                         <h2>Resumen General</h2>
                         <span>Información del sistema</span>
@@ -124,7 +121,7 @@
                             </div>
 
                             <div class="value">
-                                25
+                                23
                             </div>
 
                             <div class="sub">
@@ -134,7 +131,6 @@
                         </div>
 
                         <div class="kpi">
-
                             <div class="top">
                                 <div class="label">
                                     Materias
@@ -152,11 +148,9 @@
                             <div class="sub">
                                 Materias disponibles
                             </div>
-
                         </div>
 
                         <div class="kpi">
-
                             <div class="top">
                                 <div class="label">
                                     Carreras
@@ -174,11 +168,9 @@
                             <div class="sub">
                                 Carreras registradas
                             </div>
-
                         </div>
 
                         <div class="kpi">
-
                             <div class="top">
                                 <div class="label">
                                     Administrativos
@@ -196,11 +188,8 @@
                             <div class="sub">
                                 Usuarios administrativos
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- ACTIVIDAD Y ALERTAS -->
@@ -215,15 +204,12 @@
                         </div>
 
                         <div class="list">
-
                             <div class="row-item">
-
                                 <div class="mini-icon">
                                     +
                                 </div>
 
                                 <div>
-
                                     <p class="title">
                                         Nuevo docente registrado
                                     </p>
@@ -231,47 +217,33 @@
                                     <p class="meta">
                                         Hace 2 horas
                                     </p>
-
                                 </div>
 
                                 <div class="tag ok">
                                     Registrado
                                 </div>
-
                             </div>
-
                             <div class="row-item">
-
                                 <div class="mini-icon">
                                     ✓
                                 </div>
-
                                 <div>
-
                                     <p class="title">
                                         Materia actualizada
                                     </p>
-
                                     <p class="meta">
                                         Hoy · 09:20 AM
                                     </p>
-
                                 </div>
-
                                 <div class="tag ok">
                                     Actualizado
                                 </div>
-
                             </div>
-
                             <div class="row-item">
-
                                 <div class="mini-icon" style="color: var(--warning);">
                                     !
                                 </div>
-
                                 <div>
-
                                     <p class="title">
                                         Carrera pendiente de revisión
                                     </p>

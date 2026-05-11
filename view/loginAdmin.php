@@ -12,7 +12,7 @@
     <div class="login-section">
         <!-- Redirige a otro HTML -->
 
-        <form action="../controller/dispacher.php" method="POST" class="form-box">
+        <form action="../controller/dispacherAdmin.php" method="POST" class="form-box">
             <h1>Iniciar Sesión</h1>
             <span>¡Bienvenido!</span>
 

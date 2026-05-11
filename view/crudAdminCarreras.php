@@ -1,6 +1,36 @@
-# crudCarreras.php
+<?php
+session_start();
+if (empty($_SESSION['admin'])) {
+    header('Location: loginAdmin.php');
+    exit();
+}
 
-```php
+require_once __DIR__ . '/../model/MCarreras.php';
+$mcarreras = new MCarreras();
+
+$search_query = '';
+$carreras = [];
+
+if (isset($_SESSION['carreras_resultados'])) {
+    $carreras = $_SESSION['carreras_resultados'];
+    $search_query = $_SESSION['search_query'] ?? '';
+    unset($_SESSION['carreras_resultados'], $_SESSION['search_query']);
+} else {
+    $carreras = $mcarreras->consultar();
+}
+
+$editarCarrera = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'seleccionarCarrera') {
+    $id_carrera = $_POST['id_carrera'] ?? null;
+    if (is_numeric($id_carrera)) {
+        $editarCarrera = $mcarreras->obtenerPorId($id_carrera);
+    }
+}
+
+$successmsj = $_SESSION['successmsj'] ?? '';
+$errormsj = $_SESSION['errormsj'] ?? '';
+unset($_SESSION['successmsj'], $_SESSION['errormsj']);
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -29,49 +59,27 @@
 <section class="main">
 
     <div class="card">
-
         <div class="section-title">
-
             <h2>Gestión de Carreras</h2>
-
             <span>
                 Administración completa de carreras
             </span>
 
         </div>
-
-        <div class="actions">
-
-            <a href="#formCarrera"
-                class="btn primary"
-                style="text-decoration:none;">
-
-                + Registrar Carrera
-
-            </a>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <form method="GET">
-
+        <form method="POST" action="../controller/dispacherCarreras.php">
+            <input type="hidden" name="accion" value="buscarCarrera">
             <div style="display:flex; justify-content:flex-end; gap:15px; flex-wrap:wrap;">
-
                 <input type="text"
-                    name="buscar"
+                    name="carrera"
                     class="input-crud"
                     placeholder="Buscar carrera..."
-                    style="max-width:300px;">
+                    style="max-width:300px;"
+                    value="<?= htmlspecialchars($search_query) ?>">
 
-                <button class="btn">
+                <button class="btn primary" type="submit">
                     Buscar
                 </button>
-
             </div>
-
         </form>
 
     </div>
@@ -103,32 +111,34 @@
             </thead>
 
             <tbody>
-
-                <tr>
-
-                    <td>1</td>
-                    <td>ISC</td>
-                    <td>Ingeniería en Sistemas</td>
-                    <td>2026-05-09</td>
-
-                    <td>
-
-                        <div class="table-actions">
-
-                            <button class="btn">
-                                Editar
-                            </button>
-
-                            <button class="btn btn-danger">
-                                Eliminar
-                            </button>
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
+                <?php if (empty($carreras)) : ?>
+                    <tr>
+                        <td colspan="5" style="text-align:center;">No hay carreras registradas.</td>
+                    </tr>
+                <?php else : ?>
+                    <?php foreach ($carreras as $carrera) : ?>
+                        <tr>
+                            <td><?= htmlspecialchars($carrera['id_carrera']) ?></td>
+                            <td><?= htmlspecialchars($carrera['clave']) ?></td>
+                            <td><?= htmlspecialchars($carrera['nombre']) ?></td>
+                            <td><?= htmlspecialchars($carrera['fecha_registro']) ?></td>
+                            <td>
+                                <div class="table-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
+                                    <form method="POST" action="crudAdminCarreras.php" style="display:inline; margin:0;">
+                                        <input type="hidden" name="accion" value="seleccionarCarrera">
+                                        <input type="hidden" name="id_carrera" value="<?= htmlspecialchars($carrera['id_carrera']) ?>">
+                                        <button class="btn" type="submit">Editar</button>
+                                    </form>
+                                    <form method="POST" action="../controller/dispacherCarreras.php" style="display:inline; margin:0;">
+                                        <input type="hidden" name="accion" value="eliminarCarrera">
+                                        <input type="hidden" name="id_carrera" value="<?= htmlspecialchars($carrera['id_carrera']) ?>">
+                                        <button class="btn btn-danger" type="submit" onclick="return confirm('¿Eliminar esta carrera?')">Eliminar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
 
         </table>
@@ -139,7 +149,7 @@
 
         <div class="section-title">
 
-            <h2>Registrar / Editar Carrera</h2>
+            <h2><?= $editarCarrera ? 'Editar Carrera' : 'Registrar Carrera' ?></h2>
 
             <span>
                 Formulario de carreras
@@ -147,37 +157,42 @@
 
         </div>
 
-        <form method="POST">
-
-            <input type="hidden" name="id_carrera">
+        <form method="POST" action="../controller/dispacherCarreras.php">
+            <input type="hidden" name="id_carrera" value="<?= $editarCarrera ? htmlspecialchars($editarCarrera['id_carrera']) : '' ?>">
+            <input type="hidden" name="accion" value="<?= $editarCarrera ? 'editarCarrera' : 'RegistrarCarrera' ?>">
 
             <div class="form-grid">
 
                 <input type="text"
                     name="clave"
                     class="input-crud"
-                    placeholder="Clave Carrera">
+                    placeholder="Clave Carrera"
+                    required
+                    value="<?= $editarCarrera ? htmlspecialchars($editarCarrera['clave']) : '' ?>">
 
                 <input type="text"
                     name="nombre"
                     class="input-crud"
-                    placeholder="Nombre Carrera">
+                    placeholder="Nombre Carrera"
+                    required
+                    value="<?= $editarCarrera ? htmlspecialchars($editarCarrera['nombre']) : '' ?>">
 
                 <input type="date"
                     name="fecha_registro"
-                    class="input-crud">
+                    class="input-crud"
+                    required
+                    value="<?= $editarCarrera ? htmlspecialchars(explode(' ', $editarCarrera['fecha_registro'])[0]) : date('Y-m-d') ?>">
 
             </div>
 
-            <div style="margin-top:20px;">
+            <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
 
-                <button class="btn primary"
-                    name="accion"
-                    value="guardar">
-
-                    Guardar Carrera
-
+                <button class="btn primary" type="submit">
+                    <?= $editarCarrera ? 'Actualizar Carrera' : 'Guardar Carrera' ?>
                 </button>
+                <?php if ($editarCarrera) : ?>
+                    <a href="crudAdminCarreras.php" class="btn">Cancelar</a>
+                <?php endif; ?>
 
             </div>
 
