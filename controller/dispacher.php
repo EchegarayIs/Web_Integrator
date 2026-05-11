@@ -64,6 +64,61 @@ try {
                 header('Location: ../view/loginAdmin.php');
             }   
             break;
+        case 'GuardarAsistencia':
+
+            require_once("../model/MDocentes.php");
+
+            $idGrupo = $_POST['id_grupo'];
+
+            $fecha = $_POST['fecha'];
+
+            $hora = date("H:i:s");
+
+            $idDocente = $_SESSION['usuario']['id_docente'];
+
+            $asistencias = $_POST['asistencia'];
+
+            $docente = new MDocentes();
+
+            // OBTENER ID_DOCENTE_GRUPO
+            $docenteGrupo = $docente->obtenerDocenteGrupo(
+                $idDocente,
+                $idGrupo
+            );
+
+            $idDocenteGrupo = $docenteGrupo['id_docente_grupo'];
+
+            foreach ($asistencias as $idAlumno => $estado) {
+
+                // OBTENER ID_ALUMNO_GRUPO
+                $alumnoGrupo = $docente->obtenerAlumnoGrupo(
+                    $idAlumno,
+                    $idGrupo
+                );
+
+                $idAlumnoGrupo = $alumnoGrupo['id_alumno_grupo'];
+
+                $docente->guardarAsistencia(
+                    $fecha,
+                    $hora,
+                    $estado,
+                    $idAlumnoGrupo,
+                    $idDocenteGrupo
+                );
+            }
+
+            echo "
+<script>
+
+    alert('Lista guardada correctamente');
+
+    window.location.href='../view/misGruposDocente.php';
+
+</script>
+";
+
+            break;
+            
     }
 
 } catch (Exception $ex) {

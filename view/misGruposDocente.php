@@ -58,7 +58,7 @@ $colores = [
         ?>
 
             <a 
-                href="paseLista.php?id_grupo=<?php echo $grupo['id_grupo']; ?>" 
+                href="listasDocente.php?id_grupo=<?php echo $grupo['id_grupo']; ?>" 
                 class="group-card"
             >
 
