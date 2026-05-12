@@ -140,157 +140,149 @@ class MDocentes{
             $cnx->cerrarConexion();
         }
     }
-<<<<<<< HEAD
-=======
-}
-public function obtenerAlumnosGrupo($idGrupo){
+    
+    public function obtenerAlumnosGrupo($idGrupo){
+        $cnx = new Conexion();
 
-    $cnx = new Conexion();
+        try{
 
-    try{
+            $conexion = $cnx->conectar();
 
-        $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("
+                SELECT 
+                    a.id_alumno,
+                    a.nombre,
+                    a.app,
+                    a.apm
+                FROM alumno_grupo ag
+                INNER JOIN alumnos a
+                    ON ag.id_alumno = a.id_alumno
+                WHERE ag.id_grupo = :idGrupo
+                ORDER BY a.app ASC
+            ");
 
-        $stmt = $conexion->prepare("
-            SELECT 
-                a.id_alumno,
-                a.nombre,
-                a.app,
-                a.apm
-            FROM alumno_grupo ag
-            INNER JOIN alumnos a
-                ON ag.id_alumno = a.id_alumno
-            WHERE ag.id_grupo = :idGrupo
-            ORDER BY a.app ASC
-        ");
+            $stmt->bindParam(':idGrupo', $idGrupo);
 
-        $stmt->bindParam(':idGrupo', $idGrupo);
+            $stmt->execute();
 
-        $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
 
-    }catch(PDOException $e){
+            throw new Exception("Error en el sistema: " . $e->getMessage());
 
-        throw new Exception("Error en el sistema: " . $e->getMessage());
+        }finally{
 
-    }finally{
-
-        $cnx->cerrarConexion();
+            $cnx->cerrarConexion();
+        }
     }
-}
-public function obtenerAlumnoGrupo($idAlumno, $idGrupo){
 
-    $cnx = new Conexion();
+    public function obtenerAlumnoGrupo($idAlumno, $idGrupo){
 
-    try{
+        $cnx = new Conexion();
 
-        $conexion = $cnx->conectar();
+        try{
 
-        $stmt = $conexion->prepare("
-            SELECT id_alumno_grupo
-            FROM alumno_grupo
-            WHERE id_alumno = :idAlumno
-            AND id_grupo = :idGrupo
-        ");
+            $conexion = $cnx->conectar();
 
-        $stmt->bindParam(':idAlumno', $idAlumno);
-        $stmt->bindParam(':idGrupo', $idGrupo);
+            $stmt = $conexion->prepare("
+                SELECT id_alumno_grupo
+                FROM alumno_grupo
+                WHERE id_alumno = :idAlumno
+                AND id_grupo = :idGrupo
+            ");
 
-        $stmt->execute();
+            $stmt->bindParam(':idAlumno', $idAlumno);
+            $stmt->bindParam(':idGrupo', $idGrupo);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->execute();
 
-    }catch(PDOException $e){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
 
-        throw new Exception('Error en el sistema: ' . $e->getMessage());
+        }catch(PDOException $e){
 
-    }finally{
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
 
-        $cnx->cerrarConexion();
-    }
-}
-public function obtenerDocenteGrupo($idDocente, $idGrupo){
+        }finally{
 
-    $cnx = new Conexion();
-
-    try{
-
-        $conexion = $cnx->conectar();
-
-        $stmt = $conexion->prepare("
-            SELECT id_docente_grupo
-            FROM docente_grupo
-            WHERE id_docente = :idDocente
-            AND id_grupo = :idGrupo
-        ");
-
-        $stmt->bindParam(':idDocente', $idDocente);
-        $stmt->bindParam(':idGrupo', $idGrupo);
-
-        $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-
-    }catch(PDOException $e){
-
-        throw new Exception('Error en el sistema: ' . $e->getMessage());
-
-    }finally{
-
-        $cnx->cerrarConexion();
+            $cnx->cerrarConexion();
+        }
     }
     
-}
-public function guardarAsistencia(
-    $fecha,
-    $hora,
-    $estado,
-    $idAlumnoGrupo,
-    $idDocenteGrupo
-){
+    public function obtenerDocenteGrupo($idDocente, $idGrupo){
 
-    $cnx = new Conexion();
+        $cnx = new Conexion();
 
-    try{
+        try{
 
-        $conexion = $cnx->conectar();
+            $conexion = $cnx->conectar();
 
-        $stmt = $conexion->prepare("
-            INSERT INTO asistencias(
-                fecha,
-                estado,
-                hora_registro,
-                id_alumno_grupo,
-                id_docente_grupo
-            )
-            VALUES(
-                :fecha,
-                :estado,
-                :hora,
-                :idAlumnoGrupo,
-                :idDocenteGrupo
-            )
-        ");
+            $stmt = $conexion->prepare("
+                SELECT id_docente_grupo
+                FROM docente_grupo
+                WHERE id_docente = :idDocente
+                AND id_grupo = :idGrupo
+            ");
 
-        $stmt->bindParam(':fecha', $fecha);
-        $stmt->bindParam(':estado', $estado);
-        $stmt->bindParam(':hora', $hora);
-        $stmt->bindParam(':idAlumnoGrupo', $idAlumnoGrupo);
-        $stmt->bindParam(':idDocenteGrupo', $idDocenteGrupo);
+            $stmt->bindParam(':idDocente', $idDocente);
+            $stmt->bindParam(':idGrupo', $idGrupo);
 
-        return $stmt->execute();
+            $stmt->execute();
 
-    }catch(PDOException $e){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
 
-        throw new Exception('Error en el sistema: ' . $e->getMessage());
+        }catch(PDOException $e){
 
-    }finally{
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
 
-        $cnx->cerrarConexion();
+        }finally{
+
+            $cnx->cerrarConexion();
+        }
     }
-}
->>>>>>> d2cf157223786b7b71e60d8e1a0cbfbbe8665731
+
+    public function guardarAsistencia($fecha, $hora, $estado, $idAlumnoGrupo, $idDocenteGrupo){
+
+        $cnx = new Conexion();
+
+        try{
+
+            $conexion = $cnx->conectar();
+
+            $stmt = $conexion->prepare("
+                INSERT INTO asistencias(
+                    fecha,
+                    estado,
+                    hora_registro,
+                    id_alumno_grupo,
+                    id_docente_grupo
+                )
+                VALUES(
+                    :fecha,
+                    :estado,
+                    :hora,
+                    :idAlumnoGrupo,
+                    :idDocenteGrupo
+                )
+            ");
+
+            $stmt->bindParam(':fecha', $fecha);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->bindParam(':hora', $hora);
+            $stmt->bindParam(':idAlumnoGrupo', $idAlumnoGrupo);
+            $stmt->bindParam(':idDocenteGrupo', $idDocenteGrupo);
+
+            return $stmt->execute();
+
+        }catch(PDOException $e){
+
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+        }finally{
+
+            $cnx->cerrarConexion();
+        }
+    }
 
     public function consultar() {
         $cnx = new Conexion();
