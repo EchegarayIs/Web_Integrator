@@ -7,7 +7,7 @@ class MMaterias{
         $cnx = new Conexion();
         try {
             $conexion = $cnx->conectar();
-            $stmt = $conexion->prepare("SELECT * FROM materias WHERE nombre_materia LIKE :materia");
+            $stmt = $conexion->prepare("SELECT * FROM materias WHERE nombre_materia LIKE :materia OR creditos LIKE :materia OR clave_materia LIKE :materia OR horas_semana LIKE :materia OR estado LIKE :materia");
             $searchTerm = '%' . $materia . '%';
             $stmt->bindParam(':materia', $searchTerm);
             $stmt->execute();

@@ -7,7 +7,7 @@ class MCarreras{
         $cnx = new Conexion();
         try {
             $conexion = $cnx->conectar();
-            $stmt = $conexion->prepare("SELECT * FROM carreras WHERE nombre LIKE :carrera");
+            $stmt = $conexion->prepare("SELECT * FROM carreras WHERE nombre LIKE :carrera OR clave LIKE :carrera OR fecha_registro LIKE :carrera");
             $searchTerm = '%' . $carrera . '%';
             $stmt->bindParam(':carrera', $searchTerm);
             $stmt->execute();
