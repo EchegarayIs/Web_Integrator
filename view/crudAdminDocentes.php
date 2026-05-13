@@ -55,11 +55,13 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                 <input type="hidden" name="accion" value="buscarDocente">
                 <div style="display:flex; justify-content:flex-end; gap:15px; flex-wrap:wrap;">
                     <input type="text"
-                        name="docente"
-                        class="input-crud"
-                        placeholder="Buscar docente..."
-                        style="max-width:300px;"
-                        value="<?= htmlspecialchars($search_query) ?>">
+                    name="docente"
+                    class="input-crud"
+                    placeholder="Buscar docente..."
+                    style="max-width:300px;"
+                    pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                    title="Solo letras y espacios"
+                    value="<?= htmlspecialchars($search_query) ?>">
                     <button class="btn primary" type="submit">Buscar</button>
                 </div>
             </form>
@@ -131,26 +133,32 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                 <input type="hidden" name="accion" value="<?= $editarDocente ? 'editarDocente' : 'RegistrarDocente' ?>">
 
                 <div class="form-grid">
-                    <input type="text"
-                        name="nombre"
-                        class="input-crud"
-                        placeholder="Nombre"
-                        required
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['nombre']) : '' ?>">
+                   <input type="text"
+                    name="nombre"
+                    class="input-crud"
+                    placeholder="Nombre"
+                    required
+                    pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                    title="Solo letras y espacios"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['nombre']) : '' ?>">
 
                     <input type="text"
-                        name="app"
-                        class="input-crud"
-                        placeholder="Apellido Paterno"
-                        required
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['app']) : '' ?>">
+                    name="app"
+                    class="input-crud"
+                    placeholder="Apellido Paterno"
+                    required
+                    pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                    title="Solo letras y espacios"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['app']) : '' ?>">
 
-                    <input type="text"
-                        name="apm"
-                        class="input-crud"
-                        placeholder="Apellido Materno"
-                        required
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['apm']) : '' ?>">
+                   <input type="text"
+                    name="apm"
+                    class="input-crud"
+                    placeholder="Apellido Materno"
+                    required
+                    pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                    title="Solo letras y espacios"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['apm']) : '' ?>">
 
                     <input type="email"
                         name="correo"
@@ -160,35 +168,45 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         value="<?= $editarDocente ? htmlspecialchars($editarDocente['correo']) : '' ?>">
 
                     <input type="text"
-                        name="noEmpleado"
-                        class="input-crud"
-                        placeholder="Número de Empleado"
-                        required
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['no_empleado']) : '' ?>">
+                    name="noEmpleado"
+                    class="input-crud"
+                    placeholder="Número de Empleado"
+                    required
+                    pattern="[0-9]+"
+                    title="Solo números"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['no_empleado']) : '' ?>">
+
+                   <input type="text"
+                    name="curp"
+                    class="input-crud"
+                    placeholder="CURP"
+                    pattern="[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[A-Z0-9]{2}"
+                    title="Ingrese una CURP válida en mayúsculas"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['curp']) : '' ?>">
 
                     <input type="text"
-                        name="curp"
-                        class="input-crud"
-                        placeholder="CURP"
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['curp']) : '' ?>">
+                    name="rfc"
+                    class="input-crud"
+                    placeholder="RFC"
+                    pattern="[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}"
+                    title="Ingrese un RFC válido"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['rfc']) : '' ?>">
 
                     <input type="text"
-                        name="rfc"
-                        class="input-crud"
-                        placeholder="RFC"
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['rfc']) : '' ?>">
-
-                    <input type="text"
-                        name="nss"
-                        class="input-crud"
-                        placeholder="NSS"
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['nss']) : '' ?>">
+                    name="nss"
+                    class="input-crud"
+                    placeholder="NSS"
+                    pattern="[0-9]{11}"
+                    title="El NSS debe contener 11 números"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['nss']) : '' ?>">
 
                     <input type="tel"
-                        name="telefono"
-                        class="input-crud"
-                        placeholder="Teléfono"
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['telefono']) : '' ?>">
+                    name="telefono"
+                    class="input-crud"
+                    placeholder="Teléfono"
+                    pattern="[0-9]{10}"
+                    title="El teléfono debe contener 10 números"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['telefono']) : '' ?>">
 
                     <input type="date"
                         name="fechaNac"
@@ -197,24 +215,30 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         value="<?= $editarDocente ? htmlspecialchars(explode(' ', $editarDocente['fecha_nac'])[0]) : '' ?>">
 
                     <input type="text"
-                        name="cedula"
-                        class="input-crud"
-                        placeholder="Cédula Profesional"
-                        required
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['cedula']) : '' ?>">
+                    name="cedula"
+                    class="input-crud"
+                    placeholder="Cédula Profesional"
+                    required
+                    pattern="[0-9]+"
+                    title="Solo números"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['cedula']) : '' ?>">
 
                     <input type="text"
-                        name="especialidad"
-                        class="input-crud"
-                        placeholder="Especialidad"
-                        required
-                        value="<?= $editarDocente ? htmlspecialchars($editarDocente['especialidad']) : '' ?>">
+                    name="especialidad"
+                    class="input-crud"
+                    placeholder="Especialidad"
+                    required
+                    pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                    title="Solo letras y espacios"
+                    value="<?= $editarDocente ? htmlspecialchars($editarDocente['especialidad']) : '' ?>">
 
                     <input type="text"
                         name="gradoEstudio"
                         class="input-crud"
                         placeholder="Grado de Estudios"
                         required
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                        title="Solo letras y espacios"
                         value="<?= $editarDocente ? htmlspecialchars($editarDocente['grado_estudio']) : '' ?>">
 
                     <select name="estado" class="input-crud" required>
@@ -228,23 +252,31 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                             name="contrasenia"
                             class="input-crud"
                             placeholder="Contraseña"
-                            required>
+                            required
+                            pattern="^(?=.*[A-Z])(?=.*[A-Za-z])(?=.*[\d\W]).{8,}$"
+                            title="Mínimo 8 caracteres, una mayúscula y un número o símbolo">
 
                         <input type="password"
                             name="confcontrasenia"
                             class="input-crud"
                             placeholder="Confirmar Contraseña"
-                            required>
+                            required
+                            pattern="^(?=.*[A-Z])(?=.*[A-Za-z])(?=.*[\d\W]).{8,}$"
+                            title="Mínimo 8 caracteres, una mayúscula y un número o símbolo">
                     <?php else: ?>
                         <input type="password"
                             name="contrasenia"
                             class="input-crud"
-                            placeholder="Nueva contraseña (opcional)">
+                            placeholder="Nueva contraseña (opcional)"
+                            pattern="^(?=.*[A-Z])(?=.*[A-Za-z])(?=.*[\d\W]).{8,}$"
+                            title="Mínimo 8 caracteres, una mayúscula y un número o símbolo">
 
                         <input type="password"
                             name="confcontrasenia"
                             class="input-crud"
-                            placeholder="Confirmar nueva contraseña">
+                            placeholder="Confirmar nueva contraseña"
+                            pattern="^(?=.*[A-Z])(?=.*[A-Za-z])(?=.*[\d\W]).{8,}$"
+                            title="Mínimo 8 caracteres, una mayúscula y un número o símbolo">
 
                         <p style="font-size:0.85rem; color:#555; margin:0; grid-column: span 2;">
                             Dejar vacío para conservar la contraseña actual.

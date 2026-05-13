@@ -61,6 +61,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Buscar grupo..."
                         style="max-width:300px;"
+                        pattern="[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\-]+"
+                        title="Solo letras, números, espacios y guiones"
                         value="<?= htmlspecialchars($search_query) ?>">
                     <button class="btn primary" type="submit">Buscar</button>
                 </div>
@@ -130,11 +132,13 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                 <input type="hidden" name="id_grupo" value="<?= $editarGrupo ? htmlspecialchars($editarGrupo['id_grupo']) : '' ?>">
                 <input type="hidden" name="accion" value="<?= $editarGrupo ? 'editarGrupo' : 'RegistrarGrupo' ?>">
                 <div class="form-grid">
-                    <input type="text"
+                   <input type="text"
                         name="nombre_grupo"
                         class="input-crud"
                         placeholder="Nombre Grupo"
                         required
+                        pattern="[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\-]+"
+                        title="Solo letras, números, espacios y guiones"
                         value="<?= $editarGrupo ? htmlspecialchars($editarGrupo['nombre_grupo']) : '' ?>">
 
                     <input type="number"
@@ -142,6 +146,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Semestre"
                         required
+                        min="1"
+                        max="12"
                         value="<?= $editarGrupo ? htmlspecialchars($editarGrupo['semestre']) : '' ?>">
 
                     <input type="text"
@@ -149,6 +155,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Turno"
                         required
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                        title="Solo letras y espacios"
                         value="<?= $editarGrupo ? htmlspecialchars($editarGrupo['turno']) : '' ?>">
 
                     <input type="number"
@@ -156,6 +164,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Capacidad"
                         required
+                        min="1"
+                        max="100"
                         value="<?= $editarGrupo ? htmlspecialchars($editarGrupo['capacidad']) : '' ?>">
 
                     <select name="id_materia" class="input-crud" required>

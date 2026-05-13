@@ -70,11 +70,13 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
             <input type="hidden" name="accion" value="buscarCarrera">
             <div style="display:flex; justify-content:flex-end; gap:15px; flex-wrap:wrap;">
                 <input type="text"
-                    name="carrera"
-                    class="input-crud"
-                    placeholder="Buscar carrera..."
-                    style="max-width:300px;"
-                    value="<?= htmlspecialchars($search_query) ?>">
+                name="carrera"
+                class="input-crud"
+                placeholder="Buscar carrera..."
+                style="max-width:300px;"
+                pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                title="Solo se permiten letras y espacios"
+                value="<?= htmlspecialchars($search_query) ?>">
 
                 <button class="btn primary" type="submit">
                     Buscar
@@ -164,18 +166,22 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
             <div class="form-grid">
 
                 <input type="text"
-                    name="clave"
-                    class="input-crud"
-                    placeholder="Clave Carrera"
-                    required
-                    value="<?= $editarCarrera ? htmlspecialchars($editarCarrera['clave']) : '' ?>">
+                name="clave"
+                class="input-crud"
+                placeholder="Clave Carrera"
+                required
+                pattern="[A-Za-z0-9\-]+"
+                title="Solo letras, números y guiones"
+                value="<?= $editarCarrera ? htmlspecialchars($editarCarrera['clave']) : '' ?>">
 
                 <input type="text"
-                    name="nombre"
-                    class="input-crud"
-                    placeholder="Nombre Carrera"
-                    required
-                    value="<?= $editarCarrera ? htmlspecialchars($editarCarrera['nombre']) : '' ?>">
+                name="nombre"
+                class="input-crud"
+                placeholder="Nombre Carrera"
+                required
+                pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                title="Solo se permiten letras y espacios"
+                value="<?= $editarCarrera ? htmlspecialchars($editarCarrera['nombre']) : '' ?>">
 
                 <input type="date"
                     name="fecha_registro"

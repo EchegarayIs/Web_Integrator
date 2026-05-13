@@ -47,11 +47,13 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
             <input type="hidden" name="accion" value="buscarCicloEscolar">
             <div style="display:flex; justify-content:flex-end; gap:15px; flex-wrap:wrap;">
                 <input type="text"
-                    name="ciclo_escolar"
-                    class="input-crud"
-                    placeholder="Buscar ciclo..."
-                    style="max-width:300px;"
-                    value="<?= htmlspecialchars($search_query) ?>">
+                name="ciclo_escolar"
+                class="input-crud"
+                placeholder="Buscar ciclo..."
+                style="max-width:300px;"
+                pattern="[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\-]+"
+                title="Solo letras, números, espacios y guiones"
+                value="<?= htmlspecialchars($search_query) ?>">
                 <button class="btn primary" type="submit">Buscar</button>
             </div>
         </form>
@@ -121,11 +123,13 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
             <input type="hidden" name="accion" value="<?= $editarCiclo ? 'editarCicloEscolar' : 'RegistrarCicloEscolar' ?>">
             <div class="form-grid">
                 <input type="text"
-                    name="nombre"
-                    class="input-crud"
-                    placeholder="Nombre Ciclo"
-                    required
-                    value="<?= $editarCiclo ? htmlspecialchars($editarCiclo['nombre']) : '' ?>">
+                name="nombre"
+                class="input-crud"
+                placeholder="Nombre Ciclo"
+                required
+                pattern="[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\-]+"
+                title="Solo letras, números, espacios y guiones"
+                value="<?= $editarCiclo ? htmlspecialchars($editarCiclo['nombre']) : '' ?>">
                 <input type="date"
                     name="fecha_inicio"
                     class="input-crud"

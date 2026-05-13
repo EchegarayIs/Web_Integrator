@@ -60,6 +60,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Buscar materia..."
                         style="max-width:300px;"
+                        pattern="[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s\-]+"
+                        title="Solo letras, números, espacios y guiones"
                         value="<?= htmlspecialchars($search_query) ?>">
                     <button class="btn primary" type="submit">Buscar</button>
                 </div>
@@ -139,6 +141,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Clave Materia"
                         required
+                        pattern="[A-Za-z0-9\-]+"
+                        title="Solo letras, números y guiones"
                         value="<?= $editarMateria ? htmlspecialchars($editarMateria['clave_materia']) : '' ?>">
 
                     <input type="text"
@@ -146,6 +150,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Nombre Materia"
                         required
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                        title="Solo letras y espacios"
                         value="<?= $editarMateria ? htmlspecialchars($editarMateria['nombre_materia']) : '' ?>">
 
                     <input type="number"
@@ -153,6 +159,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Créditos"
                         required
+                        min="1"
+                        max="20"
                         value="<?= $editarMateria ? htmlspecialchars($editarMateria['creditos']) : '' ?>">
 
                     <input type="number"
@@ -160,6 +168,8 @@ unset($_SESSION['successmsj'], $_SESSION['errormsj']);
                         class="input-crud"
                         placeholder="Horas Semana"
                         required
+                        min="1"
+                        max="40"
                         value="<?= $editarMateria ? htmlspecialchars($editarMateria['horas_semana']) : '' ?>">
 
                     <select name="estado" class="input-crud" required>
