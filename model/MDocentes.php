@@ -22,22 +22,47 @@ class MDocentes{
         }
     }
 
-    public function registrar($nombre, $app, $apm, $contrasenia, $estado, $noEmpleado, $fechaNac, $cedula, $especialidad, $gradoEstudio) {
+    public function buscar($docente){
         $cnx = new Conexion();
 
         try {
             $conexion = $cnx->conectar();
-            $stmt = $conexion->prepare("INSERT INTO docentes (nombre, app, apm, contrasenia, activo, no_empleado, fecha_nac, cedula, especialidad, grado_estudio) 
-            VALUES (:nombre, :app, :apm, :contrasenia, :estado, :noEmpleado, :fechaNac, :cedula, :especialidad, :gradoEstudio)");
+            $stmt = $conexion->prepare("SELECT * FROM docentes WHERE nombre LIKE :docente OR app LIKE :docente OR apm LIKE :docente 
+                                        OR no_empleado LIKE :docente OR correo LIKE :docente OR especialidad LIKE :docente 
+                                        OR grado_estudio LIKE :docente OR curp LIKE :docente OR rfc LIKE :docente OR nss LIKE :docente 
+                                        OR telefono LIKE :docente OR activo LIKE :docente OR cedula LIKE :docente");
+            $searchTerm = '%' . $docente . '%';
+            $stmt->bindParam(':docente', $searchTerm);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+        } finally {
+            $cnx->cerrarConexion();
+        }
+    }
+
+    public function registrar($nombre, $app, $apm, $contrasenia, $estado, $noEmpleado, $fechaNac, $cedula, $especialidad, $gradoEstudio, $correo = '', $curp = '', $rfc = '', $nss = '', $telefono = '') {
+        $cnx = new Conexion();
+
+        try {
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("INSERT INTO docentes (nombre, app, apm, correo, contrasenia, activo, no_empleado, fecha_nac, cedula, curp, rfc, nss, telefono, especialidad, grado_estudio) 
+            VALUES (:nombre, :app, :apm, :correo, :contrasenia, :estado, :noEmpleado, :fechaNac, :cedula, :curp, :rfc, :nss, :telefono, :especialidad, :gradoEstudio)");
 
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':app', $app);
             $stmt->bindParam(':apm', $apm);
+            $stmt->bindParam(':correo', $correo);
             $stmt->bindParam(':contrasenia', $contrasenia);
             $stmt->bindParam(':estado', $estado);
             $stmt->bindParam(':noEmpleado', $noEmpleado);
             $stmt->bindParam(':fechaNac', $fechaNac);
             $stmt->bindParam(':cedula', $cedula);
+            $stmt->bindParam(':curp', $curp);
+            $stmt->bindParam(':rfc', $rfc);
+            $stmt->bindParam(':nss', $nss);
+            $stmt->bindParam(':telefono', $telefono);
             $stmt->bindParam(':especialidad', $especialidad);
             $stmt->bindParam(':gradoEstudio', $gradoEstudio);
             return $stmt->execute();
@@ -49,102 +74,136 @@ class MDocentes{
             $cnx->cerrarConexion();
         }
     }   
-     // NUEVO MÉTODO
+    
     public function obtenerDocentePorId($idDocente){
-
         $cnx = new Conexion();
-
         try {
-
             $conexion = $cnx->conectar();
-
             $stmt = $conexion->prepare("
                 SELECT * 
                 FROM docentes
                 WHERE id_docente = :idDocente
             ");
-
             $stmt->bindParam(':idDocente', $idDocente);
-
             $stmt->execute();
-
             return $stmt->fetch(PDO::FETCH_ASSOC);
-
         } catch (PDOException $e) {
-
             throw new Exception('Error en el sistema: ' . $e->getMessage());
-
         } finally {
-
             $cnx->cerrarConexion();
         }
     }
+
     public function actualizarPassword($idDocente, $nuevaPassword){
-
+        $cnx = new Conexion();
+        try{
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("
+                UPDATE docentes
+                SET contrasenia = :password
+                WHERE id_docente = :idDocente
+            ");
+            $stmt->bindParam(':password', $nuevaPassword);
+            $stmt->bindParam(':idDocente', $idDocente);
+            return $stmt->execute();
+        }catch(PDOException $e){
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+        }finally{
+            $cnx->cerrarConexion();
+        }
+    }
+    
+    public function obtenerGruposDocente($idDocente){
     $cnx = new Conexion();
+        try{
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("
+                SELECT 
+                    dg.id_docente_grupo,
+                    g.id_grupo,
+                    g.nombre_grupo,
+                    m.nombre_materia
+                FROM docente_grupo dg
+                INNER JOIN grupos g 
+                    ON dg.id_grupo = g.id_grupo
+                INNER JOIN materias m
+                    ON g.id_materia = m.id_materia
+                WHERE dg.id_docente = :idDocente
+            ");
 
-    try{
+            $stmt->bindParam(':idDocente', $idDocente);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            throw new Exception("Error en el sistema: " . $e->getMessage());
+        }finally{
+            $cnx->cerrarConexion();
+        }
+    }
 
-        $conexion = $cnx->conectar();
+    public function consultar() {
+        $cnx = new Conexion();
 
-        $stmt = $conexion->prepare("
-            UPDATE docentes
-            SET contrasenia = :password
-            WHERE id_docente = :idDocente
-        ");
+        try {
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("SELECT id_docente, no_empleado, nombre, app, apm, correo, especialidad, activo FROM docentes ORDER BY id_docente ASC");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $stmt->bindParam(':password', $nuevaPassword);
-        $stmt->bindParam(':idDocente', $idDocente);
+        } catch (PDOException $e) {
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+        } finally {
+            $cnx->cerrarConexion();
+        }
+    }
 
-        return $stmt->execute();
+    public function editar($idDocente, $nombre, $app, $apm, $contrasenia, $activo, $noEmpleado, $fechaNac, $cedula, $curp, $rfc, $nss, $telefono, $especialidad, $gradoEstudio) {
+        $cnx = new Conexion();
 
-    }catch(PDOException $e){
+        try {
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("UPDATE docentes SET nombre = :nombre, app = :app, apm = :apm, contrasenia = :contrasenia, activo = :activo,
+                                        no_empleado = :noEmpleado, fecha_nac = :fechaNac, cedula = :cedula, curp = :curp, rfc = :rfc, nss = :nss, telefono = :telefono,
+                                        especialidad = :especialidad, grado_estudio = :gradoEstudio WHERE id_docente = :idDocente");
 
-        throw new Exception('Error en el sistema: ' . $e->getMessage());
+            $stmt->bindParam(':idDocente', $idDocente);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':app', $app);
+            $stmt->bindParam(':apm', $apm);
+            $stmt->bindParam(':contrasenia', $contrasenia);
+            $stmt->bindParam(':activo', $activo);
+            $stmt->bindParam(':noEmpleado', $noEmpleado);
+            $stmt->bindParam(':fechaNac', $fechaNac);
+            $stmt->bindParam(':cedula', $cedula);
+            $stmt->bindParam(':curp', $curp);
+            $stmt->bindParam(':rfc', $rfc);
+            $stmt->bindParam(':nss', $nss);
+            $stmt->bindParam(':telefono', $telefono);
+            $stmt->bindParam(':especialidad', $especialidad);
+            $stmt->bindParam(':gradoEstudio', $gradoEstudio);
+            return $stmt->execute();
+            
+        } catch (PDOException $e) {
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
 
-    }finally{
+        } finally {
+            $cnx->cerrarConexion();
+        }
+    }
 
-        $cnx->cerrarConexion();
+    public function eliminar($idDocente) {
+        $cnx = new Conexion();
+
+        try {
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("DELETE FROM docentes WHERE id_docente = :idDocente");
+            $stmt->bindParam(':idDocente', $idDocente);
+            return $stmt->execute();
+            
+        } catch (PDOException $e) {
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+        } finally {
+            $cnx->cerrarConexion();
+        }
     }
 }
-public function obtenerGruposDocente($idDocente){
-
-    $cnx = new Conexion();
-
-    try{
-
-        $conexion = $cnx->conectar();
-
-        $stmt = $conexion->prepare("
-            SELECT 
-                dg.id_docente_grupo,
-                g.id_grupo,
-                g.nombre_grupo,
-                m.nombre_materia
-            FROM docente_grupo dg
-            INNER JOIN grupos g 
-                ON dg.id_grupo = g.id_grupo
-            INNER JOIN materias m
-                ON g.id_materia = m.id_materia
-            WHERE dg.id_docente = :idDocente
-        ");
-
-        $stmt->bindParam(':idDocente', $idDocente);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }catch(PDOException $e){
-
-        throw new Exception("Error en el sistema: " . $e->getMessage());
-
-    }finally{
-
-        $cnx->cerrarConexion();
-    }
-}
-
-
-}
-?>

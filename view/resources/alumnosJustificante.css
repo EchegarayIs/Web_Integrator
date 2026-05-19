@@ -1,0 +1,392 @@
+/* ==========================================================================
+   1. VARIABLES, CONFIGURACIÓN BASE Y FONDO GRADIENTE
+   ========================================================================== */
+:root {
+    --bg-gradient: linear-gradient(135deg, #e2e8f0, #c7d2fe);
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;       /* Azul oscuro para títulos */
+    --text-secondary: #475569;     /* Gris para subtítulos y texto común */
+    --text-light: #64748b;         /* Gris claro para etiquetas internas */
+    
+    /* Colores institucionales de la imagen */
+    --primary-blue: #1d3557;       /* El azul del botón seleccionado (INGLES - 6B) */
+    --light-blue: #e0e7ff;         /* Fondo para avatar o elementos activos ligeros */
+    --border-color: #e2e8f0;       /* Gris claro de los bordes internos */
+    
+    /* Paleta de Badges de la Imagen */
+    --badge-presente-bg: #e6f4ea;
+    --badge-presente-txt: #137333;
+    --badge-falta-bg: #fce8e6;
+    --badge-falta-txt: #c5221f;
+    --badge-retardo-bg: #e8f0fe;
+    --badge-retardo-txt: #1a73e8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e2e8f0, #c7d2fe);
+    color: var(--text-secondary);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   2. MENÚ LATERAL (Sidebar - Manteniendo tu funcionalidad previa)
+   ========================================================================== */
+
+.sidebar {
+    width: 280px;
+    background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px 0;
+    overflow-y: auto;
+    box-shadow: 4px 0 20px rgba(15, 23, 42, 0.1);
+    border-right: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+    .sidebar-header {
+      padding: 20px 25px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-header h2 {
+      color: #333;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      color: #667eea;
+      font-size: 28px;
+    }
+
+    .menu-items {
+      padding: 10px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 25px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .menu-item:hover {
+      background-color: #f0f2ff;
+      color: #667eea;
+      padding-left: 35px;
+    }
+
+    .menu-item .material-icons {
+      margin-right: 15px;
+      font-size: 24px;
+      width: 24px;
+    }
+
+    .menu-item.active {
+      background-color: #e8ecff;
+      color: #667eea;
+      border-left: 4px solid #667eea;
+    }
+
+
+/* ==========================================================================
+   3. CONTENIDO PRINCIPAL Y CONTROL DE CENTRADO (Manejado por tu JS)
+   ========================================================================== */
+.grid-main-content {
+    flex: 1;
+    margin-left: 280px; /* Evita que el menú encime el contenido */
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: calc(100% - 280px);
+    transition: all 0.3s ease;
+}
+
+/* Cuando JS aplica el centrado para Inicio y Formulario */
+.grid-main-content.layout-centrado {
+    align-items: center;
+}
+
+.grid-main-content.layout-centrado #sec-home,
+.grid-main-content.layout-centrado #sec-tramite,
+.grid-main-content.layout-centrado .actions,
+.grid-main-content.layout-centrado .alert {
+    width: 100%;
+    max-width: 800px;
+}
+
+.grid-main-content.layout-centrado .actions {
+    justify-content: center;
+}
+
+/* ==========================================================================
+   4. TARJETAS, BOTONES (Pestañas) Y ALERTAS (Estilo de la imagen)
+   ========================================================================== */
+.card {
+    background: var(--card-bg);
+    border-radius: 20px; /* Bordes super redondeados como la imagen */
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    border: 1px solid transparent;
+}
+
+.card h2 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* Barra de acciones (Pestañas superiores) */
+.actions {
+    display: flex;
+    gap: 12px;
+    padding-bottom: 5px;
+}
+
+/* Botones con estilo exacto de píldora gris/blanca de la imagen */
+.btn {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+}
+
+/* Botón Activo/Seleccionado (Estilo Azul Oscuro como '1. INGLES - 6B') */
+.actions .active-btn, .btn.primary {
+    background-color: var(--primary-blue) !important;
+    color: #ffffff !important;
+    border-color: var(--primary-blue) !important;
+}
+
+.alert {
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.alert.success { background-color: var(--badge-presente-bg); color: var(--badge-presente-txt); }
+.alert.error { background-color: var(--badge-falta-bg); color: var(--badge-falta-txt); }
+
+/* ==========================================================================
+   5. DISEÑO INTERNO DEL PERFIL (Paneles internos redondeados)
+   ========================================================================== */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background-color: var(--light-blue);
+    color: #1a73e8;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px; /* Cuadrado con esquinas suaves */
+}
+
+.meta .name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.meta .line {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Rejilla de Sub-bloques internos (Grupo, Periodo, Clases, Asistencias) */
+.kpis, .row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.full { grid-column: span 2; }
+
+/* Tarjetas internas de información (Pequeños recuadros grises con bordes finos) */
+.kpi, .detail-item {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+}
+
+/* El porcentaje va en su propia fila abajo según tu estructura */
+.kpis .kpi:nth-child(3) {
+    grid-column: span 2;
+}
+
+.kpi .value, .detail-item .v {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.kpi .label, .detail-item .k {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+/* Inputs del Formulario alineados a la estética */
+input[type="date"], select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background-color: #f8fafc;
+    color: var(--text-primary);
+}
+input[type="date"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background-color: #ffffff;
+}
+
+/* ==========================================================================
+   6. HISTORIAL EN PARALELO (Pantalla Dividida cuando carga la tabla)
+   ========================================================================== */
+.report-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.report-list { flex: 1.5; }
+.report-details { flex: 1; position: sticky; top: 30px; }
+
+/* Estilos de Tabla limpios e idénticos a la foto */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    color: var(--text-light);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 12px 16px;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 16px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+tbody tr {
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+tbody tr:hover { background-color: #f8fafc; }
+tbody tr.selected { background-color: #f1f5f9; }
+
+/* Píldoras de Estado (Badges ovalados perfectos) */
+.badge {
+    display: inline-block;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 20px; /* Redondeado completo de píldora */
+    text-align: center;
+    min-width: 90px;
+}
+
+/* Mapeo exacto de los colores suaves de la imagen */
+.badge.success { background-color: var(--badge-presente-bg); color: var(--badge-presente-txt); }
+.badge.danger { background-color: var(--badge-falta-bg); color: var(--badge-falta-txt); }
+.badge.warning, .badge.neutral { background-color: var(--badge-retardo-bg); color: var(--badge-retardo-txt); }
+
+/* Visor de Detalles Dinámico */
+.detail-body {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px dashed #cbd5e1;
+}
+
+.detail-item-box p {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.comments-quote {
+    background: #ffffff;
+    border-left: 4px solid var(--primary-blue);
+    padding: 12px;
+    font-style: italic;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+/* ==========================================================================
+   7. ADAPTACIÓN A DISPOSITIVOS MÓVILES
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .report-layout { flex-direction: column; }
+    .report-details { position: static; width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .grid-main-content { margin-left: 0; width: 100%; padding: 15px; }
+    .kpis, .row { grid-template-columns: 1fr; }
+    .kpis .kpi:nth-child(3) { grid-column: span 1; }
+}

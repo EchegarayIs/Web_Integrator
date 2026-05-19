@@ -21,7 +21,7 @@
 
     <div class="register-section">
         <form action="../controller/dispacherDocentes.php" method="POST" class="form-box" id="formRegistro">
-            <h1 style="margin-bottom:15px;">Crear cuenta</h1>
+            <h1 style="margin-bottom:15px;">Alta - Docentes</h1>
 
                 <!-- NOMBRE -->
                 <input
@@ -119,6 +119,55 @@
                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
                 title="Solo letras y espacios"
                 oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '')">
+
+                
+                <!-- CURP -->
+                <input
+                id="curp"
+                name="curp"
+                type="text"
+                class="input-item"
+                placeholder="CURP"
+                required
+                pattern="^^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]\d$"
+                title="CURP inválida">
+
+                <!-- RFC -->
+                <input
+                id="rfc"
+                name="rfc"
+                type="text"
+                class="input-item"
+                placeholder="RFC"
+                required
+                pattern="^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$"
+                title="RFC inválido">
+
+            </div>
+
+            <div class="row">
+
+                <!-- Correo Electrónico -->
+                <input
+                id="correo"
+                name="correo"
+                type="email"
+                class="input-item"
+                placeholder="Correo Electrónico"
+                required
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                title="Correo electrónico inválido">
+
+                <!-- NUMERO DE TELEFONO -->
+                <input
+                id="telefono"
+                name="telefono"
+                type="text"
+                class="input-item"
+                placeholder="Número de Teléfono"
+                required
+                pattern="^(?:\+?52\s?)?(?:0)?\d{2,3}[-\s]?\d{7,8}$"
+                title="Número de teléfono inválido">
 
             </div>
 

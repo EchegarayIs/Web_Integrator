@@ -114,14 +114,10 @@ $noEmpleado = $admin['no_empleado'];
                                 <div class="label">
                                     Total Docentes
                                 </div>
-
-                                <div class="trend">
-                                    +3
-                                </div>
                             </div>
 
                             <div class="value">
-                                23
+                                3
                             </div>
 
                             <div class="sub">
@@ -142,31 +138,11 @@ $noEmpleado = $admin['no_empleado'];
                             </div>
 
                             <div class="value">
-                                48
+                                3
                             </div>
 
                             <div class="sub">
                                 Materias disponibles
-                            </div>
-                        </div>
-
-                        <div class="kpi">
-                            <div class="top">
-                                <div class="label">
-                                    Carreras
-                                </div>
-
-                                <div class="trend">
-                                    Sistema
-                                </div>
-                            </div>
-
-                            <div class="value">
-                                8
-                            </div>
-
-                            <div class="sub">
-                                Carreras registradas
                             </div>
                         </div>
 
@@ -182,7 +158,7 @@ $noEmpleado = $admin['no_empleado'];
                             </div>
 
                             <div class="value">
-                                12
+                                1
                             </div>
 
                             <div class="sub">
@@ -443,19 +419,13 @@ $noEmpleado = $admin['no_empleado'];
 
                         <div class="actions">
 
-                            <button class="btn primary"
-                                style="flex:1; min-width:180px;">
+                            <form method="POST" action="../controller/dispacherAdmin.php" style="flex:1; min-width:180px;">
+                                <input type="hidden" name="accion" value="ReporteGrupos">
+                                <button class="btn" type="submit">
+                                    Reporte de Grupos
+                                </button>
 
-                                Registrar Docente
-
-                            </button>
-
-                            <button class="btn"
-                                style="flex:1; min-width:180px;">
-
-                                Registrar Materia
-
-                            </button>
+                            </form>
 
                             <button class="btn"
                                 style="flex:1; min-width:180px;">

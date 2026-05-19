@@ -65,6 +65,42 @@ class MAdmin{
             $cnx->cerrarConexion();
         }
     }
+    public function reporteGrupos() {
+        $cnx = new Conexion();
+
+        try {
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("
+             SELECT 
+                d.id_docente,
+                d.nombre AS nombre_docente,
+                d.app AS apellido_paterno_docente,
+                d.apm AS apellido_materno_docente,
+                g.id_grupo,
+                g.nombre_grupo,
+                m.nombre_materia,
+                ce.nombre AS nombre_ciclo
+            FROM docentes d
+            INNER JOIN docente_grupo dg 
+                ON d.id_docente = dg.id_docente
+            INNER JOIN grupos g 
+                ON dg.id_grupo = g.id_grupo
+            INNER JOIN materias m 
+                ON g.id_materia = m.id_materia
+            INNER JOIN ciclos_escolares ce 
+                ON g.id_ciclo = ce.id_ciclo
+            ORDER BY d.nombre, g.nombre_grupo;
+            ");
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+            
+        } catch (PDOException $e) {
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+        } finally {
+            $cnx->cerrarConexion();
+        }
+    }
 
 }
 ?>

@@ -48,7 +48,11 @@ try {
                 $_SESSION['errormsj'] = "Error al registrar el administrador.";
                 header('Location: ../view/registroAdmin.php');
             }
-        break;        
+        break;    
+        
+        case 'ReporteGrupos':
+            require_once("../view/adminReporteGrupos.php");
+        break;
     }
 
 } catch (Exception $ex) {

@@ -17,9 +17,13 @@ try {
             $contrasenia = $_POST['password'];
             $alumno = new MAlumnos();
             $resultado = $alumno->verificar($matricula, $contrasenia);
+            $resumen = $alumno->resumenGeneral($resultado['id_alumno']);
+            $recientes = $alumno->actividadReciente($resultado['id_alumno']);
             if ($resultado) {
                 $_SESSION['usuario'] = $resultado;
-                header('Location: ../view/homeAlumnos.php');
+                $_SESSION['resumen'] = $resumen;
+                $_SESSION['recientes'] = $recientes;
+                header('Location: ../view/alumnosHome.php');
             } else {
                 $_SESSION['errormsj'] = "Matrícula o contraseña incorrecta.";
                 header('Location: ../view/loginAlumno.php');
@@ -63,6 +67,60 @@ try {
                 $_SESSION['errormsj'] = "Número de empleado o contraseña incorrecta.";
                 header('Location: ../view/loginAdmin.php');
             }   
+            break;
+        case 'GuardarAsistencia':
+
+            require_once("../model/MDocentes.php");
+
+            $idGrupo = $_POST['id_grupo'];
+
+            $fecha = $_POST['fecha'];
+
+            $hora = date("H:i:s");
+
+            $idDocente = $_SESSION['usuario']['id_docente'];
+
+            $asistencias = $_POST['asistencia'];
+
+            $docente = new MDocentes();
+
+            // OBTENER ID_DOCENTE_GRUPO
+            $docenteGrupo = $docente->obtenerDocenteGrupo(
+                $idDocente,
+                $idGrupo
+            );
+
+            $idDocenteGrupo = $docenteGrupo['id_docente_grupo'];
+
+            foreach ($asistencias as $idAlumno => $estado) {
+
+                // OBTENER ID_ALUMNO_GRUPO
+                $alumnoGrupo = $docente->obtenerAlumnoGrupo(
+                    $idAlumno,
+                    $idGrupo
+                );
+
+                $idAlumnoGrupo = $alumnoGrupo['id_alumno_grupo'];
+
+                $docente->guardarAsistencia(
+                    $fecha,
+                    $hora,
+                    $estado,
+                    $idAlumnoGrupo,
+                    $idDocenteGrupo
+                );
+            }
+
+            echo "
+<script>
+
+    alert('Lista guardada correctamente');
+
+    window.location.href='../view/misGruposDocente.php';
+
+</script>
+";
+
             break;
     }
 

@@ -24,7 +24,7 @@
         
         <hr style="margin: 15px 25px; border: none; border-top: 1px solid rgba(0,0,0,0.05);">
         
-        <a href="../logout.php" class="menu-item" style="color: #e74c3c;">
+        <a href="../controller/logout.php" class="menu-item" style="color: #e74c3c;">
             <span class="material-icons">logout</span>
             <span>Cerrar Sesión</span>
         </a>
