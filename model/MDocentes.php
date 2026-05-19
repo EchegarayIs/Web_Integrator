@@ -84,6 +84,9 @@ class MDocentes{
                 FROM docentes
                 WHERE id_docente = :idDocente
             ");
+<<<<<<< HEAD
+            $stmt->bindParam(':idDocente', $idDocente);
+=======
             $stmt->bindParam(':idDocente', $idDocente);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -137,6 +140,202 @@ class MDocentes{
         }catch(PDOException $e){
             throw new Exception("Error en el sistema: " . $e->getMessage());
         }finally{
+            $cnx->cerrarConexion();
+        }
+    }
+    
+    public function obtenerAlumnosGrupo($idGrupo){
+        $cnx = new Conexion();
+
+        try{
+
+            $conexion = $cnx->conectar();
+
+            $stmt = $conexion->prepare("
+                SELECT 
+                    a.id_alumno,
+                    a.nombre,
+                    a.app,
+                    a.apm
+                FROM alumno_grupo ag
+                INNER JOIN alumnos a
+                    ON ag.id_alumno = a.id_alumno
+                WHERE ag.id_grupo = :idGrupo
+                ORDER BY a.app ASC
+            ");
+
+            $stmt->bindParam(':idGrupo', $idGrupo);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }catch(PDOException $e){
+
+            throw new Exception("Error en el sistema: " . $e->getMessage());
+
+        }finally{
+
+            $cnx->cerrarConexion();
+        }
+    }
+
+    public function obtenerAlumnoGrupo($idAlumno, $idGrupo){
+
+        $cnx = new Conexion();
+
+        try{
+
+            $conexion = $cnx->conectar();
+
+            $stmt = $conexion->prepare("
+                SELECT id_alumno_grupo
+                FROM alumno_grupo
+                WHERE id_alumno = :idAlumno
+                AND id_grupo = :idGrupo
+            ");
+
+            $stmt->bindParam(':idAlumno', $idAlumno);
+            $stmt->bindParam(':idGrupo', $idGrupo);
+
+>>>>>>> 2168162cbb749a51f62ca038dcc58b76f650e736
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+<<<<<<< HEAD
+        } catch (PDOException $e) {
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+        } finally {
+            $cnx->cerrarConexion();
+        }
+    }
+
+    public function actualizarPassword($idDocente, $nuevaPassword){
+        $cnx = new Conexion();
+        try{
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("
+                UPDATE docentes
+                SET contrasenia = :password
+                WHERE id_docente = :idDocente
+            ");
+            $stmt->bindParam(':password', $nuevaPassword);
+            $stmt->bindParam(':idDocente', $idDocente);
+            return $stmt->execute();
+        }catch(PDOException $e){
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+        }finally{
+            $cnx->cerrarConexion();
+        }
+    }
+    
+    public function obtenerGruposDocente($idDocente){
+    $cnx = new Conexion();
+        try{
+            $conexion = $cnx->conectar();
+            $stmt = $conexion->prepare("
+                SELECT 
+                    dg.id_docente_grupo,
+                    g.id_grupo,
+                    g.nombre_grupo,
+                    m.nombre_materia
+                FROM docente_grupo dg
+                INNER JOIN grupos g 
+                    ON dg.id_grupo = g.id_grupo
+                INNER JOIN materias m
+                    ON g.id_materia = m.id_materia
+                WHERE dg.id_docente = :idDocente
+            ");
+
+            $stmt->bindParam(':idDocente', $idDocente);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e){
+            throw new Exception("Error en el sistema: " . $e->getMessage());
+        }finally{
+=======
+
+        }catch(PDOException $e){
+
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+        }finally{
+
+            $cnx->cerrarConexion();
+        }
+    }
+    
+    public function obtenerDocenteGrupo($idDocente, $idGrupo){
+
+        $cnx = new Conexion();
+
+        try{
+
+            $conexion = $cnx->conectar();
+
+            $stmt = $conexion->prepare("
+                SELECT id_docente_grupo
+                FROM docente_grupo
+                WHERE id_docente = :idDocente
+                AND id_grupo = :idGrupo
+            ");
+
+            $stmt->bindParam(':idDocente', $idDocente);
+            $stmt->bindParam(':idGrupo', $idGrupo);
+
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        }catch(PDOException $e){
+
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+        }finally{
+
+            $cnx->cerrarConexion();
+        }
+    }
+
+    public function guardarAsistencia($fecha, $hora, $estado, $idAlumnoGrupo, $idDocenteGrupo){
+
+        $cnx = new Conexion();
+
+        try{
+
+            $conexion = $cnx->conectar();
+
+            $stmt = $conexion->prepare("
+                INSERT INTO asistencias(
+                    fecha,
+                    estado,
+                    hora_registro,
+                    id_alumno_grupo,
+                    id_docente_grupo
+                )
+                VALUES(
+                    :fecha,
+                    :estado,
+                    :hora,
+                    :idAlumnoGrupo,
+                    :idDocenteGrupo
+                )
+            ");
+
+            $stmt->bindParam(':fecha', $fecha);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->bindParam(':hora', $hora);
+            $stmt->bindParam(':idAlumnoGrupo', $idAlumnoGrupo);
+            $stmt->bindParam(':idDocenteGrupo', $idDocenteGrupo);
+
+            return $stmt->execute();
+
+        }catch(PDOException $e){
+
+            throw new Exception('Error en el sistema: ' . $e->getMessage());
+
+        }finally{
+
+>>>>>>> 2168162cbb749a51f62ca038dcc58b76f650e736
             $cnx->cerrarConexion();
         }
     }
