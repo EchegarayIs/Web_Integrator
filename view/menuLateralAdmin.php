@@ -47,6 +47,14 @@ function navClass($target) {
             <span>Ciclos Escolares</span>
         </a>
 
+        <form action="../controller/dispacherAdmin.php" method="post" style="margin:0;">
+            <input type="hidden" name="accion" value="justificantes">
+            <button type="submit" class="menu-item<?= navClass('justificantesAdmin.php')?>" style="background:none; border:none; width:100%; text-align:left;">
+                <span class="material-icons">description</span>
+                <span>Justificantes</span>
+            </button>
+        </form>
+
         <hr style="margin: 15px 25px; border: none; border-top: 1px solid #eee;">
 
         <a href="../controller/logout.php" class="menu-item" style="color: #e74c3c;">

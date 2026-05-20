@@ -122,10 +122,6 @@ try {
 ";
 
             break;
-<<<<<<< HEAD
-=======
-            
->>>>>>> 2168162cbb749a51f62ca038dcc58b76f650e736
     }
 
 } catch (Exception $ex) {

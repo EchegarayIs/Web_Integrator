@@ -1,0 +1,190 @@
+:root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --primary:#2563eb;
+      --success:#16a34a;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --border:#e5e7eb;
+      --shadow: 0 10px 25px rgba(2, 6, 23, .06);
+      --radius:14px;
+    }
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e2e8f0, #c7d2fe);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+    }
+    .container{
+      max-width:1250px;
+      margin: 28px auto;
+      padding: 0 16px 40px;
+    }
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 20px;
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom:24px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:42px; height:42px;
+      border-radius:12px;
+      background: linear-gradient(135deg, var(--primary), #60a5fa);
+      display:grid;
+      place-items:center;
+      color:white;
+      font-weight:900;
+      font-size:20px;
+    }
+    h1{ font-size:20px; margin:0; font-weight:800; }
+    h2{ font-size:18px; margin:32px 0 16px; color:#1e2937; }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      background:var(--card);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      border:1px solid var(--border);
+    }
+    th, td{
+      padding:14px 12px;
+      text-align:left;
+      font-size:14px;
+      border-bottom:1px solid var(--border);
+    }
+    th{
+      background:#f8fafc;
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+    tr:hover{
+      background:#f8fafc;
+    }
+
+    .badge{
+      padding:5px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:700;
+    }
+    .pendiente{ background:#fef3c7; color:#92400e; }
+    .aprobado{ background:#dcfce7; color:#166534; }
+    .rechazado{ background:#fee2e2; color:#991b1b; }
+
+    .acciones{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      padding:8px 14px;
+      border:none;
+      border-radius:999px;
+      font-weight:700;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .btn-aprobar{ background:var(--success); color:white; }
+    .btn-rechazar{ background:var(--danger); color:white; }
+    .btn-pendiente{ background:#64748b; color:white; }
+
+    .input-fecha{
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      font-size:13px;
+    }
+    .comentarios{
+      width:100%;
+      min-width:220px;
+      padding:8px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      font-size:13px;
+    }
+
+    
+.sidebar {
+    width: 280px;
+    background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px 0;
+    overflow-y: auto;
+    box-shadow: 4px 0 20px rgba(15, 23, 42, 0.1);
+    border-right: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+    .sidebar-header {
+      padding: 20px 25px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-header h2 {
+      color: #333;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      color: #667eea;
+      font-size: 28px;
+    }
+
+    .menu-items {
+      padding: 10px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 25px;
+      color: #555;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .menu-item:hover {
+      background-color: #f0f2ff;
+      color: #667eea;
+      padding-left: 35px;
+    }
+
+    .menu-item .material-icons {
+      margin-right: 15px;
+      font-size: 24px;
+      width: 24px;
+    }
+
+    .menu-item.active {
+      background-color: #e8ecff;
+      color: #667eea;
+      border-left: 4px solid #667eea;
+    }

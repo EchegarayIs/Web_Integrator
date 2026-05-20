@@ -424,22 +424,21 @@ $noEmpleado = $admin['no_empleado'];
                                 <button class="btn" type="submit">
                                     Reporte de Grupos
                                 </button>
-
                             </form>
 
-                            <button class="btn"
-                                style="flex:1; min-width:180px;">
+                            <form method="POST" action="../controller/dispacherAdmin.php" style="flex:1; min-width:180px;">
+                                <input type="hidden" name="accion" value="ReporteDocentes">
+                                <button class="btn" type="submit">
+                                    Reporte de Docentes
+                                </button>
+                            </form>
 
-                                Registrar Carrera
-
-                            </button>
-
-                            <button class="btn"
-                                style="flex:1; min-width:180px;">
-
-                                Registrar Administrativo
-
-                            </button>
+                            <form method="POST" action="../controller/dispacherAdmin.php" style="flex:1; min-width:180px;">
+                                <input type="hidden" name="accion" value="RegistrarAdministrativo">
+                                <button class="btn" type="submit">
+                                    Registrar Administrativo
+                                </button>
+                            </form>
 
                         </div>
 

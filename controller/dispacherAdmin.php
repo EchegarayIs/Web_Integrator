@@ -49,9 +49,20 @@ try {
                 header('Location: ../view/registroAdmin.php');
             }
         break;    
-        
+
+        case 'justificantes':
+            require_once("../model/MJustificantes.php");
+            $mJustificantes = new MJustificantes();
+            $_SESSION['justificantes'] = $mJustificantes->consultarJustificantes();
+            header('Location: ../view/justificantesAdmin.php');
+        break;
+
         case 'ReporteGrupos':
             require_once("../view/adminReporteGrupos.php");
+        break;
+
+        case 'ReporteDocentes':
+            require_once("../view/adminReporteDocentes.php");
         break;
     }
 
