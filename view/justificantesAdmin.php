@@ -95,10 +95,6 @@ session_start();
         ?>
     </tbody>
   </table>
-
-  <p style="margin-top:20px; color:var(--muted); font-size:13px;">
-    Nota: Los botones son de ejemplo. En la versión final con backend, al presionar "Aprobar" o "Rechazar" se actualizará el <strong>estado</strong> y la <strong>fecha_resolucion</strong>.
-  </p>
 </div>
 
 </body>
